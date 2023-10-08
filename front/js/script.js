@@ -17,12 +17,14 @@ fetch("http://localhost:3000/api/products/") //Fetching de la data sur l'api
             <h3 class="productName">${nomKanap}</h3>
             <p class="productDescription">${descriptionKanap}</p>
         </article>
-    </a>`; //récupération des données sur le html commenté( photos,texte)
+    </a>`; //récupération des données sur le html commenté( images,texte)
 		}
 	})
 	.catch(function (err) {  // la console nous prévient en cas d'erreur 
 		console.log(err);
 	});
+
+
 
 
 
