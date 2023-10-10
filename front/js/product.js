@@ -18,15 +18,16 @@ const getItems = () => {
     })
     .then(function(data){
         console.log(data)
-        const myPrice = (document.getElementById("price").innerHTML= data.price)
+        const myPrice = (document.getElementById("price").innerHTML = data.price)
+        const myTitle = (document.getElementById("title").innerHTML = data.name)
+        const newImg = document.createElement("img")
+        document.querySelector(".item__img").appendChild(newImg)
+        newImg.setAttribute("src" , `${data.imageUrl}`)
     })
 
 }
 
-
-
-
-
+getItems()
 
 
 
