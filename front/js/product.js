@@ -16,25 +16,26 @@ const getItems = () => {
     .then(function(res) {
         return res.json()
     })
-    .then(function(data){
+    .then(function(data){             // 5 variables , titre , couleurs
+                                      // prix , image , description
         console.log(data)
         const myPrice = (document.getElementById("price").innerHTML = data.price)
         const myTitle = (document.getElementById("title").innerHTML = data.name)
         const newImg = document.createElement("img")
         document.querySelector(".item__img").appendChild(newImg)
         newImg.setAttribute("src" , `${data.imageUrl}`)
+
+        const myDescription = (document.getElementById("description").innerHTML = data.description)
+        const myColors = document.getElementById("colors")
+        for (color in data.colors){
+            myColors.innerHTML += `<option value="${data.colors[color]}">${data.colors[color]}</option>`
+        }
     })
 
 }
 
-getItems()
+getItems()                           
 
-
-
-
-
-
-	
 
 
 
