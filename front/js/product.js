@@ -38,16 +38,29 @@ const addinCart = document.getElementById("addToCart");
 
 addinCart.addEventListener("click", () => {
     const quantityInput = document.getElementById("quantity");
-    const maxQuantity = 100; // la variable qui définit la quantité maximum
+    const colorSelect = document.getElementById("colors");
+    const maxQuantity = 100; // limite la quantité a 100 du panier
 
-    const enteredQuantity = parseInt(quantityInput.value, 10);
+    let enteredQuantity = parseInt(quantityInput.value, 10);
+    let selectedColor = colorSelect.value;
+
+    // bloque la quantité a 1 minimum , meme si on met une valeur négative
+    if (enteredQuantity < 1) {
+        enteredQuantity = 1;
+        quantityInput.value = enteredQuantity; // met a jour la quantité a chaque input 
+    }
+
+    if (selectedColor === "") {
+        alert("Veuillez choisir une couleur avant d'ajouter au panier.");
+        return; // alerte qui empeche l'ajout au panier quand aucune couleur est choisi
+    }
 
     if (enteredQuantity > maxQuantity) {
         alert("La quantité ne peut pas dépasser 100. Veuillez réduire la quantité.");
     } else {
         const myProduct = {
             quantity: enteredQuantity,
-            color: document.getElementById("colors").value,
+            color: selectedColor,
             id: id
         };
 
@@ -57,7 +70,7 @@ addinCart.addEventListener("click", () => {
             myProductLocalStorage = JSON.parse(localStorage.getItem("addToCart"));
         }
 
-        // Ici la quantité qui ne peut pas  être supérieur a 100 dans le localStorage
+        // bloque la quantité maximum dans le localStorage a 100
         if (enteredQuantity + getTotalQuantityInCart(myProductLocalStorage) <= maxQuantity) {
             myProductLocalStorage.push(myProduct);
             localStorage.setItem("addToCart", JSON.stringify(myProductLocalStorage));
@@ -67,7 +80,7 @@ addinCart.addEventListener("click", () => {
     }
 });
 
-// Fonction qui calcul la quantité total dans le panier
+// fonction pour calculé la quantité maximum dans le panier
 function getTotalQuantityInCart(cart) {
     let totalQuantity = 0;
     for (const product of cart) {
@@ -75,8 +88,6 @@ function getTotalQuantityInCart(cart) {
     }
     return totalQuantity;
 }
-
-
 
 
 getItems()      
