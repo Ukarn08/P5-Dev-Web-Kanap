@@ -34,10 +34,52 @@ const getItems = () => {
 
 }
 
-getItems()                           
+const addinCart = document.getElementById("addToCart");
+
+addinCart.addEventListener("click", () => {
+    const quantityInput = document.getElementById("quantity");
+    const maxQuantity = 100; // la variable qui définit la quantité maximum
+
+    const enteredQuantity = parseInt(quantityInput.value, 10);
+
+    if (enteredQuantity > maxQuantity) {
+        alert("La quantité ne peut pas dépasser 100. Veuillez réduire la quantité.");
+    } else {
+        const myProduct = {
+            quantity: enteredQuantity,
+            color: document.getElementById("colors").value,
+            id: id
+        };
+
+        let myProductLocalStorage = [];
+
+        if (localStorage.getItem("addToCart") !== null) {
+            myProductLocalStorage = JSON.parse(localStorage.getItem("addToCart"));
+        }
+
+        // Ici la quantité qui ne peut pas  être supérieur a 100 dans le localStorage
+        if (enteredQuantity + getTotalQuantityInCart(myProductLocalStorage) <= maxQuantity) {
+            myProductLocalStorage.push(myProduct);
+            localStorage.setItem("addToCart", JSON.stringify(myProductLocalStorage));
+        } else {
+            alert("La quantité totale dans le panier ne peut pas dépasser 100.");
+        }
+    }
+});
+
+// Fonction qui calcul la quantité total dans le panier
+function getTotalQuantityInCart(cart) {
+    let totalQuantity = 0;
+    for (const product of cart) {
+        totalQuantity += product.quantity;
+    }
+    return totalQuantity;
+}
 
 
 
+
+getItems()      
 
 
 
